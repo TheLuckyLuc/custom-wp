@@ -53,6 +53,11 @@ module.exports = {
 				},
 			},
 			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
+			},
+			{
 				test: /\.s[ac]ss$/,
 				use: [
 					isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
