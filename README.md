@@ -5,6 +5,7 @@
 -   Tailwind
 -   Sass
 -   TypeScript
+-   Browsersync
 -   SVG Sprites
 
 ## Scripts
