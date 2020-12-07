@@ -20,6 +20,17 @@
 
 (You'll want to make sure you run the build script before putting anything live if you're using Tailwind, as this will purge any unused classes, which will otherwise massively bloat your project).
 
+## Browsersync
+
+To get Browsersync to work, just update the "**proxy**" key in webpack.config.js before starting the dev process.
+
+    new  BrowserSyncPlugin({
+    	    host: 'localhost',
+    	    port: 3000,
+    	    proxy: 'http://localhost/your-site',
+    	    files: ['**/*.php', './dist/css/*.css', './dist/js/*.js'],
+        })
+
 ## Don't wanna use Tailwind?
 
 You'll want to uninstall the following packages:
