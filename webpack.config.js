@@ -8,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 const pluginOptions = isDevelopment
 	? [
-			new SVGSpritemapPlugin('src/img/svg/*.svg', {
+			new SVGSpritemapPlugin('src/img/**/*.svg', {
 				output: {
 					svg4everybody: true,
 				},
@@ -24,17 +24,22 @@ const pluginOptions = isDevelopment
 			}),
 	  ]
 	: [
-			new SVGSpritemapPlugin(),
+			new SVGSpritemapPlugin('src/img/**/*.svg', {
+				output: {
+					svg4everybody: true,
+				},
+			}),
 			new MiniCssExtractPlugin({
 				filename: '../css/[name].css',
 			}),
 	  ];
 
 module.exports = {
-	entry: path.resolve(__dirname, 'src', 'js', 'index.js'),
+	entry: path.resolve(__dirname, 'src', 'js', 'index.ts'),
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist', 'js'),
+		publicPath: '',
 	},
 	plugins: pluginOptions,
 	watch: isDevelopment,
@@ -94,7 +99,7 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(png|jpg|gif|svg)$/,
+				test: /\.(jpe?g|png|gif|svg)$/i,
 				use: [
 					{
 						loader: 'file-loader',
