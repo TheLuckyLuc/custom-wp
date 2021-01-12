@@ -4,7 +4,6 @@ $file_includes = array(
 	'/setup.php',
 	'/enqueue.php',
 	'/utility.php',
-	'/svg.php',
 );
 
 foreach ($file_includes as $file) {
