@@ -41,6 +41,9 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist', 'js'),
 		publicPath: '',
 	},
+	resolve: {
+		extensions: ['.tsx', '.ts', '.jsx', '.js'],
+	},
 	plugins: pluginOptions,
 	watch: isDevelopment,
 	devtool: 'source-map',
