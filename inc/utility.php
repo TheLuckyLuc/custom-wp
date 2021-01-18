@@ -20,7 +20,7 @@ add_filter( 'wp_check_filetype_and_ext', function($data, $file, $filename, $mime
 
 add_filter( 'upload_mimes', 'cc_mime_types' );
 function cc_mime_types( $mimes ){
-	$mimes['svg'] = 'image/svg+xml';
+	$mimes['svg'] = 'image/svg';
 	return $mimes;
 }
 
