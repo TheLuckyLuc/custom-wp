@@ -3,11 +3,15 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 const pluginOptions = isDevelopment
 	? [
+			new CleanWebpackPlugin({
+				cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, 'dist')],
+			}),
 			new SVGSpritemapPlugin('src/img/**/*.svg', {
 				output: {
 					svg4everybody: true,
@@ -24,6 +28,9 @@ const pluginOptions = isDevelopment
 			}),
 	  ]
 	: [
+			new CleanWebpackPlugin({
+				cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, 'dist')],
+			}),
 			new SVGSpritemapPlugin('src/img/**/*.svg', {
 				output: {
 					svg4everybody: true,
