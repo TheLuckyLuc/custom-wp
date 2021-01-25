@@ -7,6 +7,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+const buildPath = isDevelopment ? '/your-site/wp-content/themes/brace/dist/' : './';
+
 const pluginOptions = isDevelopment
 	? [
 			new CleanWebpackPlugin({
@@ -16,9 +18,6 @@ const pluginOptions = isDevelopment
 				output: {
 					svg4everybody: true,
 				},
-			}),
-			new MiniCssExtractPlugin({
-				filename: '../css/[name].css',
 			}),
 			new BrowserSyncPlugin({
 				host: 'localhost',
@@ -37,16 +36,16 @@ const pluginOptions = isDevelopment
 				},
 			}),
 			new MiniCssExtractPlugin({
-				filename: '../css/[name].css',
+				filename: 'css/[name].css',
 			}),
 	  ];
 
 module.exports = {
 	entry: path.resolve(__dirname, 'src', 'js', 'index.ts'),
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist', 'js'),
-		publicPath: '',
+		filename: 'js/bundle.js',
+		path: path.resolve(__dirname, 'dist'),
+		publicPath: buildPath,
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
@@ -58,6 +57,19 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.tsx?$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env'],
+						},
+					},
+					'ts-loader',
+				],
+			},
+			{
 				test: /\.m?js$/,
 				exclude: /node_modules/,
 				use: {
@@ -68,14 +80,16 @@ module.exports = {
 				},
 			},
 			{
-				test: /\.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/,
-			},
-			{
 				test: /\.s[ac]ss$/,
 				use: [
-					isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+					isDevelopment
+						? 'style-loader'
+						: {
+								loader: MiniCssExtractPlugin.loader,
+								options: {
+									publicPath: '../',
+								},
+						  },
 					{
 						loader: 'css-loader',
 						options: {
@@ -109,20 +123,22 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(jpe?g|png|gif|svg)$/i,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: '[name].[ext]',
-							outputPath: '../images',
-						},
-					},
-				],
+				test: /\.svg$/,
+				type: 'asset/source',
 			},
 			{
-				test: /\.svg$/,
-				loader: 'svg-inline-loader',
+				test: /\.(jpe?g|png|gif)$/i,
+				type: 'asset/resource',
+				generator: {
+					filename: 'img/[name]-[hash][ext]',
+				},
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
+				type: 'asset/resource',
+				generator: {
+					filename: 'fonts/[name]-[hash][ext]',
+				},
 			},
 		],
 	},
