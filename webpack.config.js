@@ -1,13 +1,13 @@
 const path = require('path');
 
+const chokidar = require('chokidar');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-const buildPath = isDevelopment ? '/your-site/wp-content/themes/brace/dist/' : './';
+const siteUrl = 'http://localhost/your-site';
 
 const pluginOptions = isDevelopment
 	? [
@@ -18,12 +18,6 @@ const pluginOptions = isDevelopment
 				output: {
 					svg4everybody: true,
 				},
-			}),
-			new BrowserSyncPlugin({
-				host: 'localhost',
-				port: 3000,
-				proxy: 'http://localhost/your-site',
-				files: ['**/*.php', './dist/css/*.css', './dist/js/*.js'],
 			}),
 	  ]
 	: [
@@ -45,15 +39,40 @@ module.exports = {
 	output: {
 		filename: 'js/bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-		publicPath: buildPath,
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
 	},
+	target: 'web',
 	plugins: pluginOptions,
 	watch: isDevelopment,
 	devtool: 'source-map',
-	mode: isDevelopment ? 'development' : 'production',
+	mode: process.env.NODE_ENV,
+	devServer: {
+		before(_app, server) {
+			chokidar.watch(['**/*.php']).on('all', function () {
+				server.sockWrite(server.sockets, 'content-changed');
+			});
+		},
+		writeToDisk: filePath => {
+			return /spritemap\.svg$/.test(filePath);
+		},
+		contentBase: './dist',
+		publicPath: '/',
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+			'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+		},
+		hot: true,
+		host: 'localhost',
+		open: siteUrl,
+		port: 3000,
+		watchOptions: {
+			poll: true,
+			ignored: '/node_modules/',
+		},
+	},
 	module: {
 		rules: [
 			{

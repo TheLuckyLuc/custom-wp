@@ -1,6 +1,7 @@
 <?php
 
 $file_includes = array(
+	'/env.php',
 	'/setup.php',
 	'/enqueue.php',
 	'/utility.php',
