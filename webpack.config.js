@@ -49,7 +49,7 @@ module.exports = {
 	devtool: 'source-map',
 	mode: process.env.NODE_ENV,
 	devServer: {
-		before(_app, server) {
+		before: (_app, server) => {
 			chokidar.watch(['**/*.php']).on('all', function () {
 				server.sockWrite(server.sockets, 'content-changed');
 			});
