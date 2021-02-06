@@ -39,6 +39,7 @@ First you'll also want to delete the **tailwind.scss** file from the **/src/sass
 Next you'll want to uninstall the following NPM packages:
 
 > tailwindcss
+
 > @tailwindcss/typography
 
 Lastly you'll need to just make sure you remove "**tailwindcss**" from the "postcss-loader" plugins array in webpack.config.js as below:
