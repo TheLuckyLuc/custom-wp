@@ -1,4 +1,5 @@
-import '../sass/index.scss'; // So we can compile all the styles
+import '../sass/tailwind.scss';
+import '../sass/index.scss'; // Any custom styles
 
 if (module.hot) {
 	module.hot.accept();

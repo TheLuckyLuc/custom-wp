@@ -32,16 +32,14 @@ Look for the following variable in the **webpack.config.js** file & replace it w
 
 ## Don't wanna use Tailwind?
 
-You'll want to uninstall the following packages:
+First you'll also want to delete the **tailwind.scss** file from the **/src/sass** folder & delete the import statement for this file, which can be found in the **index.ts** file as follows:
+
+    import  '../sass/tailwind.scss';
+
+Next you'll want to uninstall the following NPM packages:
 
 > tailwindcss
 > @tailwindcss/typography
-
-You'll also want to remove the below statements from the index.scss file found in the /src folder.
-
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
 
 Lastly you'll need to just make sure you remove "**tailwindcss**" from the "postcss-loader" plugins array in webpack.config.js as below:
 
@@ -63,9 +61,9 @@ Lastly you'll need to just make sure you remove "**tailwindcss**" from the "post
 
 You can import normal .js files or .ts files into the **index.ts** file, which can be found in the **/src/js** folder. It'll compile just fine with either. Just make sure not to rename the **index.ts** file unless you update your webpack.config.js.
 
-File extensions don't need to be included when importing them to index.ts i.e. can just be referenced like
+File extensions don't need to be included when importing them to index.ts i.e. can just be referenced like:
 
-    import './filename'
+    import './filename';
 
 ## SVG Sprites
 

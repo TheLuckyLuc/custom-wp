@@ -45,7 +45,6 @@ module.exports = {
 	},
 	target: 'web',
 	plugins: pluginOptions,
-	watch: isDevelopment,
 	devtool: 'source-map',
 	mode: process.env.NODE_ENV,
 	devServer: {
