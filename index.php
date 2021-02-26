@@ -11,7 +11,7 @@
 
 	<?php else: ?>
 
-		<?php get_template_part('loop-templates', 'none'); ?>
+		<?php get_template_part('template-parts/none'); ?>
 
 	<?php endif; ?>
 
