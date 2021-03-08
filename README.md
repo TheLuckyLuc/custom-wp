@@ -3,9 +3,13 @@
 ## Supports (so far)
 
 :heavy_check_mark: Tailwind
+
 :heavy_check_mark: Sass
+
 :heavy_check_mark: TypeScript
+
 :heavy_check_mark: Hot Module Replacement (updates JS & CSS without having to reload the browser). Any PHP file changes will cause a full page reload.
+
 :heavy_check_mark: SVG Sprites
 
 ## Scripts
@@ -38,31 +42,36 @@
 
 Look for the following variable in the **webpack.config.js** file & replace it with your development url.
 
-    const siteUrl = 'http://localhost/your-site';
+```javascript
+const siteUrl = 'http://localhost/your-site';
+```
 
 ## Don't wanna use Tailwind?
 
 First you'll also want to delete the **tailwind.scss** file from the **/src/sass** folder & delete the import statement for this file, which can be found in the **index.ts** file as follows:
 
-    import  '../sass/tailwind.scss';
+```javascript
+import '../sass/tailwind.scss';
+```
 
 Next you'll want to uninstall the following NPM packages:
 
 > tailwindcss
-
 > @tailwindcss/typography
 
 Lastly you'll need to just make sure you remove "**tailwindcss**" from the "postcss-loader" plugins array in webpack.config.js as below:
 
-    {
-    	loader: 'postcss-loader',
-    	options: {
-    		sourceMap: true,
-    		postcssOptions: {
-    			plugins: ['tailwindcss', ...(!isDevelopment ? ['autoprefixer', 'cssnano'] : [])],
-    		},
-    	},
-    },
+```javascript
+{
+		loader: 'postcss-loader',
+		options: {
+			sourceMap: true,
+			postcssOptions: {
+				plugins: ['tailwindcss', ...(!isDevelopment ? ['autoprefixer', 'cssnano'] : [])],
+			},
+		},
+},
+```
 
 ### What's @tailwindcss/typography?
 
@@ -74,7 +83,9 @@ You can import normal .js files or .ts files into the **index.ts** file, which c
 
 File extensions don't need to be included when importing them to index.ts i.e. can just be referenced like:
 
-    import './filename';
+```javascript
+import './filename';
+```
 
 ## SVG Files
 
@@ -90,9 +101,11 @@ Any .svg files that get added to the **/src/svg** folder, will get added to a co
 
 If you added an svg file called "twitter.svg" to the /src/svg folder for example, you'll then be able to inline it into any file using the below syntax:
 
-    <svg>
-    	<use xlink:href="<?php echo get_template_directory_uri(); ?>/dist/spritemap.svg#sprite-twitter"></use>
-    </svg>
+```php
+<svg>
+	<use xlink:href="<?php echo get_template_directory_uri(); ?>/dist/spritemap.svg#sprite-twitter"></use>
+</svg>
+```
 
 ### Don't wanna use SVG sprites?
 
@@ -102,10 +115,12 @@ npm uninstall the following package:
 
 Then just remove the following block of code in the webpack.config.js file (mentioned twice):
 
-    new  SVGSpritemapPlugin('src/svg/**/*.svg', {
-    	output: {
-    		svg4everybody: true,
-    	},
-    }),
+```javascript
+ new SVGSpritemapPlugin('src/svg/**/*.svg', {
+		output: {
+			svg4everybody: true,
+		},
+	}),
+```
 
 Also remove the "**svg-spritemap-webpack-plugin**" import at the top of the file in case you forget.
