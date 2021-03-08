@@ -14,7 +14,7 @@ const pluginOptions = isDevelopment
 			new CleanWebpackPlugin({
 				cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, 'dist')],
 			}),
-			new SVGSpritemapPlugin('src/img/**/*.svg', {
+			new SVGSpritemapPlugin('src/svg/**/*.svg', {
 				output: {
 					svg4everybody: true,
 				},
@@ -24,7 +24,7 @@ const pluginOptions = isDevelopment
 			new CleanWebpackPlugin({
 				cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, 'dist')],
 			}),
-			new SVGSpritemapPlugin('src/img/**/*.svg', {
+			new SVGSpritemapPlugin('src/svg/**/*.svg', {
 				output: {
 					svg4everybody: true,
 				},
@@ -74,7 +74,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
+				test: /\.[jt]sx?$/,
 				exclude: /node_modules/,
 				use: [
 					{
@@ -142,6 +142,16 @@ module.exports = {
 			{
 				test: /\.svg$/,
 				type: 'asset/source',
+				include: [path.resolve(__dirname, 'src/svg/inline')],
+			},
+			{
+				test: /\.svg$/,
+				type: 'asset/resource',
+				include: [path.resolve(__dirname, 'src/svg')],
+				exclude: [path.resolve(__dirname, 'src/svg/inline')],
+				generator: {
+					filename: 'svg/[name]-[hash][ext]',
+				},
 			},
 			{
 				test: /\.(jpe?g|png|gif)$/i,

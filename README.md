@@ -2,11 +2,11 @@
 
 ## Supports (so far)
 
--   Tailwind
--   Sass
--   TypeScript
--   Hot Module Replacement (updates JS & CSS without having to reload the browser). Any PHP file changes will cause a full page reload.
--   SVG Sprites
+:heavy_check_mark: Tailwind
+:heavy_check_mark: Sass
+:heavy_check_mark: TypeScript
+:heavy_check_mark: Hot Module Replacement (updates JS & CSS without having to reload the browser). Any PHP file changes will cause a full page reload.
+:heavy_check_mark: SVG Sprites
 
 ## Scripts
 
@@ -23,6 +23,16 @@
 > npm run build
 
 (You'll want to make sure you run the build script before putting anything live if you're using Tailwind, as this will purge any unused classes, which will otherwise massively bloat your project).
+
+## Intended "src" folder structure
+
+    src
+     - img
+     - svg
+        | inline (in case you want to inline any SVG files via JS)
+     - js
+     - sass
+     - fonts
 
 ## To get Hot Module Replacement & live reloading to work
 
@@ -66,14 +76,36 @@ File extensions don't need to be included when importing them to index.ts i.e. c
 
     import './filename';
 
-## SVG Sprites
+## SVG Files
+
+### Inline SVGs
+
+If you want to inline any SVGs via JS, just place them in a folder called "**inline**" inside the "**svg**" folder. This will allow you to pull in the entire SVG file rather than just referencing it via a link.
+
+### SVG Sprites
 
 I just included this by default because I've found it super handy to work with when needing to re-use custom svg files multiple times (apparently more performant than manually inlining them).
 
-Any .svg files that get added to the **/src/img** folder, will get added to a combined **"spritemap.svg"** file in the root of the **dist** folder, which lets you inline any svg files just by referencing them using the **use** element.
+Any .svg files that get added to the **/src/svg** folder, will get added to a combined **"spritemap.svg"** file in the root of the **dist** folder, which lets you inline any svg files just by referencing them using the **use** element.
 
-If you added an svg file called "twitter.svg" to the /src/img folder for example, you'll then be able to inline it into any file using the below syntax:
+If you added an svg file called "twitter.svg" to the /src/svg folder for example, you'll then be able to inline it into any file using the below syntax:
 
     <svg>
     	<use xlink:href="<?php echo get_template_directory_uri(); ?>/dist/spritemap.svg#sprite-twitter"></use>
     </svg>
+
+### Don't wanna use SVG sprites?
+
+npm uninstall the following package:
+
+> svg-spritemap-webpack-plugin
+
+Then just remove the following block of code in the webpack.config.js file (mentioned twice):
+
+    new  SVGSpritemapPlugin('src/svg/**/*.svg', {
+    	output: {
+    		svg4everybody: true,
+    	},
+    }),
+
+Also remove the "**svg-spritemap-webpack-plugin**" import at the top of the file in case you forget.
