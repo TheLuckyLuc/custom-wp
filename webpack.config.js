@@ -43,6 +43,7 @@ module.exports = {
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
 	},
+	target: isDevelopment ? 'web' : 'browserslist',
 	plugins: pluginOptions,
 	devtool: 'source-map',
 	mode: process.env.NODE_ENV,
