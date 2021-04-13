@@ -46,6 +46,18 @@ Look for the following variable in the **webpack.config.js** file & replace it w
 const siteUrl = 'http://localhost/your-site';
 ```
 
+## Uses Tailwind's JIT mode by default
+
+[More info on JIT here](https://tailwindcss.com/docs/typography-plugin)
+
+If you want to disable JIT compilation for Tailwind, just delete the following from the **tailwind.config.js** file:
+
+```javascript
+{
+		mode: 'jit',
+},
+```
+
 ## Don't wanna use Tailwind?
 
 First you'll also want to delete the **tailwind.scss** file from the **/src/sass** folder & delete the import statement for this file, which can be found in the **index.ts** file as follows:
@@ -57,6 +69,7 @@ import '../sass/tailwind.scss';
 Next you'll want to uninstall the following NPM packages:
 
 > tailwindcss
+
 > @tailwindcss/typography
 
 Lastly you'll need to just make sure you remove "**tailwindcss**" from the "postcss-loader" plugins array in webpack.config.js as below:

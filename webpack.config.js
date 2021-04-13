@@ -45,7 +45,7 @@ module.exports = {
 	},
 	target: isDevelopment ? 'web' : 'browserslist',
 	plugins: pluginOptions,
-	devtool: 'source-map',
+	devtool: isDevelopment ? 'eval-source-map' : 'source-map',
 	mode: process.env.NODE_ENV,
 	devServer: {
 		before: (_app, server) => {
