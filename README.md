@@ -48,13 +48,13 @@ const siteUrl = 'http://localhost/your-site';
 
 ## Uses Tailwind's JIT mode by default
 
-[More info on JIT here](https://tailwindcss.com/docs/typography-plugin)
+[More info on JIT here](https://tailwindcss.com/docs/just-in-time-mode)
 
 If you want to disable JIT compilation for Tailwind, just delete the following from the **tailwind.config.js** file:
 
 ```javascript
 {
-		mode: 'jit',
+	mode: 'jit',
 },
 ```
 
@@ -76,13 +76,13 @@ Lastly you'll need to just make sure you remove "**tailwindcss**" from the "post
 
 ```javascript
 {
-		loader: 'postcss-loader',
-		options: {
-			sourceMap: true,
-			postcssOptions: {
-				plugins: ['tailwindcss', ...(!isDevelopment ? ['autoprefixer', 'cssnano'] : [])],
-			},
+	loader: 'postcss-loader',
+	options: {
+		sourceMap: true,
+		postcssOptions: {
+			plugins: ['tailwindcss', ...(!isDevelopment ? ['autoprefixer', 'cssnano'] : [])],
 		},
+	},
 },
 ```
 
